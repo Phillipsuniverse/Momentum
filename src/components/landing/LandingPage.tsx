@@ -15,18 +15,11 @@ export function LandingPage() {
             <span className="text-xl font-semibold tracking-tight">Momentum</span>
           </div>
           
-          <div className="flex items-center gap-4 animate-fade-in">
-            <Link to="/login">
-              <Button variant="ghost" size="sm">
-                Log in
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button size="sm">
-                Get Started
-              </Button>
-            </Link>
-          </div>
+          <Link to="/dashboard" className="animate-fade-in">
+            <Button size="sm">
+              Start
+            </Button>
+          </Link>
         </div>
       </header>
 
@@ -50,9 +43,9 @@ export function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animation-delay-300">
-            <Link to="/signup">
+            <Link to="/dashboard">
               <Button size="lg" className="gap-2 px-8">
-                Start tracking free
+                Start tracking
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

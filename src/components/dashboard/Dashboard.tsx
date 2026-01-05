@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Target, LogOut, Loader2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Target, Home, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { HabitTracker } from './HabitTracker';
@@ -10,42 +9,12 @@ import { MoodSelector } from './MoodSelector';
 import { VibeCoach } from './VibeCoach';
 
 export function Dashboard() {
-  const { user, signOut } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
   
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
   const [vibe, setVibe] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [initialLoadDone, setInitialLoadDone] = useState(false);
-
-  // Load today's data on mount
-  useEffect(() => {
-    const loadTodayData = async () => {
-      if (!user) return;
-      
-      const today = new Date().toISOString().split('T')[0];
-      const { data, error } = await supabase
-        .from('daily_logs')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('log_date', today)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error loading today\'s data:', error);
-      } else if (data) {
-        setSelectedMood(data.mood);
-        setSelectedHabits(data.habits || []);
-        setVibe(data.ai_vibe);
-      }
-      setInitialLoadDone(true);
-    };
-
-    loadTodayData();
-  }, [user]);
 
   const handleHabitToggle = (habitId: string) => {
     setSelectedHabits(prev => 
@@ -60,7 +29,6 @@ export function Dashboard() {
   };
 
   const handleLogAndGetVibe = async () => {
-    if (!user) return;
     if (!selectedMood) {
       toast({
         title: 'Pick a mood first',
@@ -70,26 +38,9 @@ export function Dashboard() {
       return;
     }
 
-    setIsSaving(true);
     setIsLoading(true);
     
-    const today = new Date().toISOString().split('T')[0];
-    
     try {
-      // Save to database
-      const { error: saveError } = await supabase
-        .from('daily_logs')
-        .upsert({
-          user_id: user.id,
-          log_date: today,
-          mood: selectedMood,
-          habits: selectedHabits,
-        }, {
-          onConflict: 'user_id,log_date',
-        });
-
-      if (saveError) throw saveError;
-
       // Generate vibe from AI
       const { data: vibeData, error: vibeError } = await supabase.functions.invoke('generate-vibe', {
         body: { mood: selectedMood, habits: selectedHabits },
@@ -100,16 +51,9 @@ export function Dashboard() {
       const newVibe = vibeData?.vibe || 'Keep building that momentum! You\'re doing amazing. 🎵 Vibe Track: Good Days by SZA';
       setVibe(newVibe);
 
-      // Save vibe to database
-      await supabase
-        .from('daily_logs')
-        .update({ ai_vibe: newVibe })
-        .eq('user_id', user.id)
-        .eq('log_date', today);
-
       toast({
-        title: 'Day logged! 🎉',
-        description: 'Your vibe has been generated.',
+        title: 'Vibe generated! 🎉',
+        description: 'Keep up the momentum!',
       });
     } catch (error) {
       console.error('Error:', error);
@@ -119,23 +63,9 @@ export function Dashboard() {
         variant: 'destructive',
       });
     } finally {
-      setIsSaving(false);
       setIsLoading(false);
     }
   };
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-  };
-
-  if (!initialLoadDone) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen">
@@ -149,10 +79,12 @@ export function Dashboard() {
             <span className="text-xl font-semibold tracking-tight">Momentum</span>
           </div>
           
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Log out
-          </Button>
+          <Link to="/">
+            <Button variant="ghost" size="sm">
+              <Home className="w-4 h-4 mr-2" />
+              Home
+            </Button>
+          </Link>
         </div>
       </header>
 
@@ -196,17 +128,17 @@ export function Dashboard() {
           <div className="animate-fade-in-up animation-delay-300">
             <Button 
               onClick={handleLogAndGetVibe}
-              disabled={isSaving}
+              disabled={isLoading}
               size="lg"
               className="w-full py-6 text-lg"
             >
-              {isSaving ? (
+              {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Saving & generating...
+                  Generating vibe...
                 </>
               ) : (
-                '✨ Log Today & Get Vibe'
+                '✨ Get Your Vibe'
               )}
             </Button>
           </div>
