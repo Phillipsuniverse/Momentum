@@ -10,12 +10,12 @@ import {
 import { cn } from '@/lib/utils';
 
 const MOODS = [
+  { id: 'tired', label: 'Tired', icon: BatteryLow, color: 'text-purple-500' },
   { id: 'low', label: 'Low', icon: Frown, color: 'text-red-500' },
   { id: 'meh', label: 'Meh', icon: Meh, color: 'text-orange-500' },
   { id: 'neutral', label: 'Neutral', icon: Smile, color: 'text-yellow-500' },
   { id: 'good', label: 'Good', icon: SmilePlus, color: 'text-lime-500' },
   { id: 'great', label: 'Great', icon: Laugh, color: 'text-green-500' },
-  { id: 'tired', label: 'Tired', icon: BatteryLow, color: 'text-purple-500' },
   { id: 'pumped', label: 'Pumped', icon: Rocket, color: 'text-blue-500' },
 ];
 
