@@ -8,7 +8,7 @@ The Twist? This entire application was built to showcase the power of Vibe Codin
 ## ✨ Features
 📊 Daily Logging: Track core habits (Meditation, Reading, Deep Work) and mood in seconds.
 
-🤖 AI Vibe Coach: Integrated with Google Gemini 2.0 Flash. It doesn't just log data; it analyzes your mood + habits combo to give you a personalized motivational boost and a song recommendation.
+🤖 AI Vibe Coach: Integrated with Google Gemini 2.5 Flash. It doesn't just log data; it analyzes your mood + habits combo to give you a personalized motivational boost and a song recommendation.
 
 🎨 Adaptive UI: A clean, "Apple-esque" aesthetic with a dynamic background that shifts based on the vibe.
 
