@@ -5,8 +5,12 @@ import {
   CandyOff, 
   Droplets, 
   BookOpen, 
-  Bike, 
-  PenLine 
+  PenLine,
+  Moon,
+  Phone,
+  Salad,
+  TreeDeciduous,
+  Heart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -17,8 +21,12 @@ const HABITS = [
   { id: 'no-sugar', label: 'No Sugar', icon: CandyOff },
   { id: 'water', label: '3L Water', icon: Droplets },
   { id: 'reading', label: 'Read 10 Pages', icon: BookOpen },
-  { id: 'gym', label: 'Gym / Workout', icon: Bike },
   { id: 'journal', label: 'Journaling', icon: PenLine },
+  { id: 'sleep', label: '7+ Hours Sleep', icon: Moon },
+  { id: 'screen-free', label: 'No Phone 1hr', icon: Phone },
+  { id: 'greens', label: 'Ate Greens', icon: Salad },
+  { id: 'outdoors', label: 'Went Outside', icon: TreeDeciduous },
+  { id: 'gratitude', label: 'Gratitude', icon: Heart },
 ];
 
 interface HabitTrackerProps {
