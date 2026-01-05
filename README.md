@@ -56,5 +56,5 @@ Vibe Coding is the philosophy that building software should be accessible to eve
 
 This project is proof that if you can articulate an idea, you can build it.
 
-#🤝 Contributing
+# 🤝 Contributing
 Got a cool idea? Want to add a "Spotify Integration" or "Weekly Analytics"? Fork this repo, ask an AI to implement it, and submit a Pull Request!
