@@ -54,7 +54,7 @@ export function LandingPage() {
           {/* Features */}
           <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
-              { title: '8 Daily Habits', desc: 'Track what matters most to you' },
+              { title: '12 Daily Habits', desc: 'Track what matters most to you' },
               { title: '7 Mood Levels', desc: 'Capture how you really feel' },
               { title: 'AI Vibe Coach', desc: 'Get personalized motivation' },
             ].map((feature, i) => (
